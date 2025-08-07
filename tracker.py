@@ -1,5 +1,6 @@
 from storage import StorageHandler
 from habit import Habit
+from datetime import datetime
 
 class HabitTracker:
     def __init__(self, db_path="db.sqlite3"):
@@ -17,8 +18,10 @@ class HabitTracker:
         habit_id = self.storage.insert_habit(name, periodicity)
         self.habits.append(Habit(habit_id=habit_id, name=name, periodicity=periodicity))
 
-    def mark_complete(self, habit_id):
-        self.storage.log_completion(habit_id)
+    def mark_complete(self, habit_id, date = None):
+         if date is None:
+             date = datetime.now().isoformat()
+         self.storage.log_completion(habit_id, date)
 
     def get_completion_lookup(self):
         return {
@@ -30,11 +33,6 @@ class HabitTracker:
     def delete_habit(self, habit_id):
         self.storage.delete_habit(habit_id)
         self.habits = [h for h in self.habits if h.habit_id != habit_id]
-
-    def complete_habit(self, habit_id, date=None):
-        if date is None:
-            date = datetime.now().date().isoformat()
-        self.storage.log_completion(habit_id, date)
 
     def undo_completion(self, habit_id, date):
         self.storage.delete_completion(habit_id, date)
