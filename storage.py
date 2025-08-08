@@ -55,18 +55,19 @@ class StorageHandler:
             print(f"Error fetching habits: {e}")
             raise
 
-    def log_completion(self, habit_id):
+    def log_completion(self, habit_id, completion_date= None):
         try:
-            # Check if the habit exists
             cursor = self.conn.execute("SELECT COUNT(*) FROM habits WHERE id=?", (habit_id,))
             if cursor.fetchone()[0] == 0:
                 raise ValueError(f"Habit with ID {habit_id} does not exist.")
+            if completion_date is None:
+                completion_date = datetime.now().isoformat()
 
             with self.conn:
                 self.conn.execute(
-                    "INSERT INTO completions (habit_id) VALUES (?)",  # No need to provide the date
-                    (habit_id,)
-                )
+                "INSERT INTO completions (habit_id, completion_date) VALUES (?, ?)",
+                (habit_id, completion_date)
+            )
         except (sqlite3.Error, ValueError) as e:
             print(f"Error logging completion: {e}")
             raise
@@ -80,11 +81,6 @@ class StorageHandler:
         except sqlite3.Error as e:
             print(f"Error fetching completions for habit ID {habit_id}: {e}")
             raise
-
-    def delete_habit(self, habit_id):
-        with self.conn:
-            self.conn.execute("DELETE from completions WHERE habit_id = ?", (habit_id,))
-            self.conn.execute("DELETE from habits WHERE id = ?", (habit_id,))
 
     def delete_habit(self, habit_id):
         try:
@@ -105,4 +101,3 @@ def delete_completion(self, habit_id, date):
     except sqlite3.Error as e:
         print(f"Error deleting completion: {e}")
         raise
-           
