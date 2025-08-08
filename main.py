@@ -20,7 +20,7 @@ def list_habits(habits):
         print(f"{habit.habit_id}. {habit.name} ({habit.periodicity})")
 
 def main():
-    tracker = HabitTracker()
+    tracker = HabitTracker("habits.db")
 
     while True:
         display_menu()
