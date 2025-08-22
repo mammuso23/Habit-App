@@ -67,22 +67,29 @@ The app uses SQLite (db.sqlite3) for persistence.
  - completions → stores completion logs.
 ## 5. How to use the app.
 The habit tracker comes with **two interfaces**:
-1. **The CLI**
-2. **The GUI**
+1. **The CLI (Command Line Interface)**
+2. **The GUI (Graphical User Interface)**
+
 ## The CLI version
 ```bash
 python main.py
 ```
 - Option 1 → View all habits you’ve created.
-
 - Option 2 → Add a new habit (you’ll be asked for name + periodicity: daily/weekly).
-
 - Option 3 → Mark a habit as completed (logs a completion in the database).
-
 - Option 4 → View your weekly tracker in a grid-like format.
-
 - Option 5 → Delete a habit by its ID.
-
 - Option 6 → View analytics for a habit (longest streak, total completions, last completed).
-
 - Option 7 → Exit the app.
+  
+## The GUI version
+```bash
+python gui.py
+```
+You’ll see a window with:
+- Habit Name field → type the habit you want to track.
+- Periodicity dropdown → select "daily" or "weekly".
+- Add Habit button → creates the habit and adds it to the list.
+- Habit List → shows all habits with their IDs and periodicities.
+- Grid Tracker → a 7-day grid where you can tick off completions using checkboxes.
+- Dark Mode toggle → switch between light and dark themes.
