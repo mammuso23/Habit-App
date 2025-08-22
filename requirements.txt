@@ -1,0 +1,9 @@
+# GUI
+tkinter
+
+# Database
+sqlite3
+
+# Optional
+pandas
+matplotlib
