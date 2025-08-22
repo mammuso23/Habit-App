@@ -1,29 +1,4 @@
-# Python cache / build files
 __pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.egg-info/
-*.egg
-*.manifest
-*.spec
-
-# SQLite database (local only, don’t track in repo)
-db.sqlite3
+*.pyc
 *.db
-
-# Virtual environments
-venv/
-env/
-.venv/
-
-# IDE / editor specific
-.vscode/
-.idea/
-
-# OS generated files
 .DS_Store
-Thumbs.db
-
-# Logs
-*.log
