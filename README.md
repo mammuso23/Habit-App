@@ -86,6 +86,10 @@ python main.py
 ```bash
 python gui.py
 ```
+<img width="1366" height="731" alt="Screenshot (16)" src="https://github.com/user-attachments/assets/7316804d-1b90-4129-8eca-47727159c363" />
+
+<img width="1366" height="727" alt="Screenshot (15)" src="https://github.com/user-attachments/assets/5c924697-8ed9-468c-83cd-9f1dc19588fc" />
+
 You’ll see a window with:
 - Habit Name field → type the habit you want to track.
 - Periodicity dropdown → select "daily" or "weekly".
