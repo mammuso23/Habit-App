@@ -10,14 +10,16 @@ And analyse habit trends using core statistics.
 ## 📂 Project Structure
 habit_tracker/
 
-- habit.py - Habit class
-- tracker.py - HabitTracker class (manages habits)
-- storage.py - Handles SQLite database
-- analytics.py - Analytics (streaks, completions, stats)
-- gui.py - GUI with CustomTkinter
-- main.py - CLI-based interface
-- db.sqlite3 - SQLite database (auto-created)
-- README.md - Project documentation
+- habit.py # Habit class
+- tracker.py # HabitTracker class (manages habits)
+- storage.py # Handles SQLite database
+- analytics.py # Analytics (streaks, completions, stats)
+- gui.py # GUI with CustomTkinter
+- main.py # CLI-based interface
+- db.sqlite3 # SQLite database (auto-created)
+- tests/ # Unit tests (coming in final phase)
+- README.md # Project documentation
+- .gitignore # Ignore cache/DB files
 
 ## Features
 - Add new habits (daily or weekly).
