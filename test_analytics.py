@@ -1,5 +1,6 @@
 import unittest
 from tracker import HabitTracker
+from analytics import calculate_longest_streak
 from test_data import predefined_habits
 
 class TestHabitAnalytics(unittest.TestCase):
