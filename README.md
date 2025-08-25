@@ -99,3 +99,20 @@ You’ll see a window with:
 - Habit List → shows all habits with their IDs and periodicities.
 - Grid Tracker → a 7-day grid where you can tick off completions using checkboxes.
 - Dark Mode toggle → switch between light and dark themes.
+
+## Running Tests
+This project includes unit tests for habit creation, editing, deletion, and the analytics module, including streak calculations.
+- Using unittest that is a default(you don't have to install it):
+  From the project root directory, run:
+  ```bash
+  python -m unittest discover -s tests
+  ```
+- Using pytest:
+  Firstly install pytest:
+  ```bash
+  pip install pytest
+  ```
+  To run all tests:
+  ```bash
+  pytest -v
+  ```
