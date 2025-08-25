@@ -1,12 +1,12 @@
 import customtkinter as ctk
 from tracker import HabitTracker
 from datetime import datetime, timedelta
+from tkinter import messagebox
 
-ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 app = ctk.CTk()
-app.title("Track My Habit")
+app.title("Track My Habit📝")
 app.geometry("700x600")
 
 tracker = HabitTracker("habits.db")
@@ -28,7 +28,16 @@ def add_habit():
         update_habit_list()
         update_grid()
     else:
-        ctk.CTkMessagebox(title="Input Error", message="Please enter both Habit Name and Periodicity.")
+        messagebox.showwarning(title="Input Error", message="Please enter both Habit Name and Periodicity.")
+
+main_frame = ctk.CTkFrame(app)
+main_frame.pack(expand=True, fill="both")
+
+title = ctk.CTkLabel(main_frame, text="Track My Habit 📝", font=("Arial", 20))
+title.pack(pady=10)
+
+frame = ctk.CTkFrame(main_frame)
+frame.pack(pady=10, padx=10, fill="x")
 
 def toggle_habit_completion(habit, day, checkbox):
     if checkbox.get():
@@ -37,6 +46,16 @@ def toggle_habit_completion(habit, day, checkbox):
         tracker.undo_completion(habit.habit_id, day)
     update_grid()
 
+def toggle_mode():
+    current = ctk.get_appearance_mode()
+    if current == "Light":
+        ctk.set_appearance_mode("dark")
+    else:
+        ctk.set_appearance_mode("light")
+
+mode_switch = ctk.CTkSwitch(app, text="Dark Mode", command=toggle_mode)
+mode_switch.pack(pady=5)
+
 def update_grid():
     for widget in grid_frame.winfo_children():
         widget.destroy()
@@ -44,6 +63,12 @@ def update_grid():
     completions = tracker.get_completion_lookup()
     today = datetime.today().date()
     days = [(today - timedelta(days=i)).isoformat() for i in range(6, -1, -1)]
+
+    grid_frame.grid_columnconfigure(0, weight=1)
+    for i in range(1, len(days) + 1):
+        grid_frame.grid_columnconfigure(i, weight=1)
+    for row_index in range(len(tracker.habits) + 1):
+        grid_frame.grid_rowconfigure(row_index, weight=1)
 
     ctk.CTkLabel(grid_frame, text="Habit ↓ / Day →").grid(row=0, column=0, padx=5, pady=5)
     for i, d in enumerate(days):
@@ -65,18 +90,22 @@ def update_grid():
             checkbox.grid(row=row_index, column=col_index + 1, padx=5, pady=5)
             checkbox.select() if is_checked else checkbox.deselect()
 
-def toggle_theme():
-    current_mode = ctk.get_appearance_mode()
-    ctk.set_appearance_mode("dark" if current_mode == "light" else "light")
+def delete_selected_habit():
+    try:
+        # Get the selected habit line (format: "ID. Name (periodicity)")
+        selected_text = habit_listbox.get("sel.first", "sel.last").strip()
+        if not selected_text:
+            messagebox.showwarning(title="Selection Error", message="Please select a habit to delete.")
+            return
 
-title = ctk.CTkLabel(app, text="My Habit Tracker", font=("Arial", 20))
-title.pack(pady=10)
+        habit_id = int(selected_text.split(".")[0])
+        tracker.delete_habit(habit_id)
 
-theme_switch = ctk.CTkSwitch(app, text="Dark Mode", command=toggle_theme)
-theme_switch.pack(pady=5)
-
-frame = ctk.CTkFrame(app)
-frame.pack(pady=10, padx=10, fill="x")
+        update_habit_list()
+        update_grid()
+        messagebox.showinfo(title="Deleted", message="Habit deleted successfully.")
+    except Exception as e:
+        messagebox.showerror(title="Error", message=f"Failed to delete habit.\n{e}")
 
 entry_name = ctk.CTkEntry(frame, placeholder_text="Habit Name")
 entry_name.grid(row=0, column=0, padx=5, pady=5)
@@ -88,12 +117,21 @@ periodicity_dropdown.grid(row=0, column=1, padx=5, pady=5)
 add_button = ctk.CTkButton(frame, text="Add Habit", fg_color="#61afef", hover_color="#528ecc", command=add_habit)
 add_button.grid(row=0, column=2, padx=5, pady=5)
 
-habit_listbox = ctk.CTkTextbox(app, width=500, height=150)
-habit_listbox.pack(pady=10)
+delete_button = ctk.CTkButton(
+    frame,
+    text="Delete Habit",
+    fg_color="#e06c75",
+    hover_color="#d45c67",
+    command=delete_selected_habit
+)
+delete_button.grid(row=0, column=3, padx=5, pady=5)
+
+habit_listbox = ctk.CTkTextbox(main_frame, state = "normal")
+habit_listbox.pack(pady=10, padx=10, expand=True, fill="both")
 habit_listbox.configure(state="disabled")
 
-grid_frame = ctk.CTkFrame(app)
-grid_frame.pack(pady=10)
+grid_frame = ctk.CTkFrame(main_frame)
+grid_frame.pack(pady=10, padx=10, expand=True, fill="both")
 
 update_habit_list()
 update_grid()
