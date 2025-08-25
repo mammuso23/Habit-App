@@ -17,7 +17,9 @@ habit_tracker/
 - gui.py # GUI with CustomTkinter
 - main.py # CLI-based interface
 - db.sqlite3 # SQLite database (auto-created)
-- tests/ # Unit tests (coming in final phase)
+- tests/
+    - test_habit.py
+    - test_analytic.py
 - README.md # Project documentation
 - .gitignore # Ignore cache/DB files
 
@@ -102,17 +104,14 @@ You’ll see a window with:
 
 ## Running Tests
 This project includes unit tests for habit creation, editing, deletion, and the analytics module, including streak calculations.
-- Using unittest that is a default(you don't have to install it):
+- Using unittest for automated tests:
   From the project root directory, run:
   ```bash
   python -m unittest discover -s tests
   ```
-- Using pytest:
-  Firstly install pytest:
+- To run the file tests individually:
   ```bash
-  pip install pytest
+  python -m unittest tests/test_habit.py
+  python -m unittest tests/test_analytic.py
   ```
-  To run all tests:
-  ```bash
-  pytest -v
-  ```
+
