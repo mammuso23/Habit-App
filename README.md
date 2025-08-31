@@ -114,4 +114,18 @@ This project includes unit tests for habit creation, editing, deletion, and the 
   python -m unittest tests/test_habit.py
   python -m unittest tests/test_analytic.py
   ```
+  
+## Test Coverage
+- Habit initialization and validation
+- Streak calculation for daily habits
+- Streak calculation for weekly habits
+- Database persistence operations
+- Analytics function correctness
 
+## Contrubution
+This project was developed as part of an academic portfolio. For suggestions or improvements:
+- Fork the repository
+- Create a feature branch
+- Make your changes
+- Add tests for new functionality
+- Submit a pull request
