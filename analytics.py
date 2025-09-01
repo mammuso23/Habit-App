@@ -1,27 +1,52 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
-def calculate_longest_streak(dates, periodicity):
-    if not dates:
+def calculate_longest_streak(habit):
+    """Calculates the current streak for a given habit."""
+    if not habit.completion_dates:
+        return 0
+    
+    dates = sorted([cd.date() if isinstance(cd, datetime) else cd for cd in habit.completion_dates])
+    
+    if habit.periodicity == "daily":
+        return calculate_daily_streak(dates)
+    elif habit.periodicity == "weekly":
+        return calculate_weekly_streak(dates)
+    else:
         return 0
 
-    streak = longest = 0
-    previous = None
-    sorted_dates = sorted(dates)
-
-    for date in sorted_dates:
-        if previous:
-            delta_days = (date - previous).days
-            if (
-                (periodicity == "daily" and delta_days == 1) or
-                (periodicity == "weekly" and delta_days <= 7)
-            ):
-                streak += 1
-            else:
-                streak = 1
+def calculate_daily_streak(dates):
+    """Calculate streak for daily habits"""
+    if not dates:
+        return 0
+    
+    streak = 1
+    longest = 1
+    dates = sorted(dates)
+    
+    for i in range(1, len(dates)):
+        if (dates[i] - dates[i-1]).days == 1:
+            streak += 1
         else:
-            streak = 1
-
+            streak = 1 
         longest = max(longest, streak)
-        previous = date
+    
+    return longest
 
+def calculate_weekly_streak(dates):
+    """Calculate streak for weekly habits"""
+    if not dates:
+        return 0
+    
+    streak = 1
+    longest = 1
+    dates = sorted(dates)
+    
+    for i in range(1, len(dates)):
+        days_diff = (dates[i] - dates[i-1]).days
+        if days_diff <= 7:
+            streak += 1
+        else:
+            streak = 1 
+        longest = max(longest, streak)
+    
     return longest
