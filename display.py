@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 def build_weekly_grid(habits, completions_lookup):
+    """Displays the table of all habits with their status."""
     today = datetime.today()
     start_of_week = today - timedelta(days=today.weekday())
     week_dates = [(start_of_week + timedelta(days=i)).date() for i in range(7)]
