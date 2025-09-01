@@ -3,7 +3,10 @@ from habit import Habit
 from datetime import datetime
 
 class HabitTracker:
+    """This is the main application class for managing habits and their tracking."""
+
     def __init__(self, db_path="db.sqlite3"):
+        """This initializes the habit tracker with the database connection."""
         self.storage = StorageHandler(db_path)
         self.habits = self.load_habits()
 
@@ -19,6 +22,7 @@ class HabitTracker:
         self.habits.append(Habit(habit_id=habit_id, name=name, periodicity=periodicity))
 
     def mark_complete(self, habit_id, date = None):
+         """Marks a habit as complete for a specific date."""
          if date is None:
              date = datetime.now().isoformat()
          self.storage.log_completion(habit_id, date)
