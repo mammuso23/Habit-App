@@ -2,7 +2,10 @@ import sqlite3
 from datetime import datetime
 
 class StorageHandler:
+    """Storage handler for the tracking application."""
+
     def __init__(self, db_path='db.sqlite3'):
+        """Initializes the database connection and creates tables if they don't exist."""
         self.conn = self._connect(db_path)
         self.create_tables()
 
@@ -14,6 +17,13 @@ class StorageHandler:
             raise
 
     def create_tables(self):
+        """Creates the necessary database tables if they don't exist already.
+        
+        Creates two tables:
+        - habits: Stores habit metadata (id, name, periodicity, creation date)
+        - completions: Stores completion records
+        """
+
         try:
             with self.conn:
                 self.conn.execute('''
@@ -37,6 +47,7 @@ class StorageHandler:
             raise
 
     def insert_habit(self, name, periodicity):
+        """Adds a new habit to the database."""
         try:
             with self.conn:
                 cursor = self.conn.execute(
@@ -49,6 +60,7 @@ class StorageHandler:
             raise
 
     def fetch_all_habits(self):
+        """Retrieves all the habits from the database."""
         try:
             return self.conn.execute("SELECT * FROM habits").fetchall()
         except sqlite3.Error as e:
@@ -83,6 +95,7 @@ class StorageHandler:
             raise
 
     def delete_habit(self, habit_id):
+        """Deletes a habit from the database."""
         try:
             with self.conn:
                 self.conn.execute("DELETE FROM completions WHERE habit_id = ?", (habit_id,))
