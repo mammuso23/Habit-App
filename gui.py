@@ -10,6 +10,11 @@ app.title("Track My Habit📝")
 app.geometry("700x600")
 
 tracker = HabitTracker("habits.db")
+"""This is a graphical user interface for the Habit Tracker application.
+
+   The Tkinder-based GUI for managing and tracking habits, allowing users to view,
+   add, complete, and analyze habits through the visual interface. 
+"""
 
 def update_habit_list():
     habit_listbox.configure(state="normal")
@@ -19,6 +24,7 @@ def update_habit_list():
     habit_listbox.configure(state="disabled")
 
 def add_habit():
+    """Allows the user to enter the habit."""
     name = entry_name.get().strip()
     periodicity = periodicity_dropdown.get()
 
@@ -57,6 +63,11 @@ mode_switch = ctk.CTkSwitch(app, text="Dark Mode", command=toggle_mode)
 mode_switch.pack(pady=5)
 
 def update_grid():
+    """Sets up the main user interface components.
+        
+       Creates and arranges all GUI widgets including the habit list, 
+       action buttons, and analytics display areas.
+    """
     for widget in grid_frame.winfo_children():
         widget.destroy()
 
@@ -92,7 +103,6 @@ def update_grid():
 
 def delete_selected_habit():
     try:
-        # Get the selected habit line (format: "ID. Name (periodicity)")
         selected_text = habit_listbox.get("sel.first", "sel.last").strip()
         if not selected_text:
             messagebox.showwarning(title="Selection Error", message="Please select a habit to delete.")
@@ -135,5 +145,4 @@ grid_frame.pack(pady=10, padx=10, expand=True, fill="both")
 
 update_habit_list()
 update_grid()
-
 app.mainloop()
