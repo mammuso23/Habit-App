@@ -4,6 +4,19 @@ from analytics import calculate_longest_streak
 from datetime import datetime
 
 def display_menu():
+    """Main entry point for the Habit Tracker command-line application.
+    
+        It displays the main menu, and handles
+        user input to navigate through different functionality options.
+        Supports the following operations:
+        - View all habits
+        - Mark habits as complete
+        - Add new habits
+        - Remove habits
+        - View analytics
+        - Exit application
+    """
+
     print("<<<Let's Track Your Habits>>>")
     print("1. View Habits")
     print("2. Add A New Habit")
@@ -20,6 +33,7 @@ def list_habits(habits):
         print(f"{habit.habit_id}. {habit.name} ({habit.periodicity})")
 
 def main():
+    
     tracker = HabitTracker("habits.db")
 
     while True:
