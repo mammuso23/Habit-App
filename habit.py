@@ -1,7 +1,18 @@
 from datetime import datetime
 
 class Habit:
+    """Represents a habit with its properties and tracking functionality.
+
+    Attributes:
+    habit_id (int), name (str), periodicity ('daily' or 'weekly'), and created_at (str)
+    """
+
     def __init__(self, habit_id: int, name: str, periodicity: str, created_at: str = None):
+        """Initializes a new Habit instance.
+        
+        Args:
+            habit_id (int), name (str), periodicity ('daily' or 'weekly'), and created_at (str)
+        """
         self.habit_id = habit_id
         self.name = name
         self.periodicity = periodicity
@@ -20,6 +31,14 @@ class Habit:
         return len(completions)
 
     def get_current_streak(self, completions):
+        """Calculates the current streak of consecutive completions.
+        
+        Args:
+            completions (list)
+            
+        Returns:
+            int: Current streak length
+        """
         if not completions:
             return 0
 
@@ -46,6 +65,14 @@ class Habit:
         return streak
     
     def get_days_missed(self, completions):
+        """Calculates how many days/weeks have been missed since the user last completed.
+        
+        Args:
+            completions (list)
+            
+        Returns:
+            int/str: Number of days/weeks missed, or 'Not Available' if no completions
+        """
         if not completions:
             return "Not Available"
 
